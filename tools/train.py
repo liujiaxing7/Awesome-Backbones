@@ -28,6 +28,8 @@ def parse_args():
     parser.add_argument('--resume-from', help='the checkpoint file to resume from')
     parser.add_argument('--seed', type=int, default=None, help='random seed')
     parser.add_argument('--device', help='device used for training. (Deprecated)')
+    parser.add_argument('--train_path', type=str, help='device used for training. (Deprecated)')
+    parser.add_argument('--val_path', type=str, help='device used for training. (Deprecated)')
     parser.add_argument(
         '--gpu-id',
         type=int,
@@ -71,7 +73,7 @@ def main():
     meta['seed'] = seed
     
     # 读取训练&制作验证标签数据
-    total_annotations   = "datas/train.txt"
+    total_annotations   = args.train_path
     with open(total_annotations, encoding='utf-8') as f:
         total_datas = f.readlines()
     if args.split_validation:
@@ -89,7 +91,7 @@ def main():
         val_datas = total_datas[val_start:val_end]
     else:
         train_datas = total_datas.copy()
-        test_annotations    = 'datas/test.txt'
+        test_annotations    = args.val_path
         with open(test_annotations, encoding='utf-8') as f:
             val_datas   = f.readlines()
     
